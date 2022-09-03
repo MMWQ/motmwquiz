@@ -16,6 +16,11 @@
     font-weight: 900;
     margin-top: 20px;
     cursor: pointer
+    
+}
+.flashcard:hover, .quiz:hover{
+    opacity: .5;
+    transition: .2s;
 }
 
 .page {
@@ -25,8 +30,7 @@
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    border-color: black;
-    border-width: 1px;
+    border: solid black 5px;
     flex-direction: column;
 
     div {
