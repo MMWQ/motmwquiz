@@ -27,4 +27,9 @@
     height: 100vh;
     border-color: black;
     border-width: 1px;
+    flex-direction: column;
+
+    div {
+        display: flex;
+    }
 }
