@@ -1,7 +1,14 @@
+import Link from "next/link";
+
 export default function Home() {
     return (
         <div>
-            Test
+
         </div>
     );
 }
+
+/**
+ * Link 1 - /flashcard
+ * Link 2 - /quiz
+ */
