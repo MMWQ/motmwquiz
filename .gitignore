@@ -37,5 +37,3 @@ next-env.d.ts
 
 *.drawio
 *.drawio.bkp
-
-/schema
