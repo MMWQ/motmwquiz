@@ -35,4 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-*.drawio.*
+*.drawio
+*.drawio.bkp
+*.drawio.dtmp
