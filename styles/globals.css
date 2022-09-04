@@ -1,0 +1,42 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-family: 'SUIT', 'sans-serif';
+    margin: 0;
+    user-select: none;
+}
+
+body {
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    font-family: 'SUIT', 'sans-serif';
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    min-height: 0;
+    margin: 0;
+    background-color: transparent;
+}
+
+input {
+    font-family: 'SUIT', 'sans-serif';
+    border: none;
+    outline: none;
+    min-width: none;
+}
