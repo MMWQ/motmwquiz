@@ -4,12 +4,29 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import axios from "axios";
 import pg from "../lib/db";
+import { useEffect, useState } from "react";
 
 export default function Flashcard({ un_member_state, observer_state, us_territory }) {
     let { data: session } = useSession();
 
+    let [settings, setSettings] = useState(undefined);
+    let [name, setName] = useState(undefined);
+
+    useEffect(() => loadSettings(), []);
+
     const loadSettings = () => {
-        axios.get("/api/me");
+        if (session) axios.get("/api/me").then(resp => decodeSettings(resp.data));
+        else if (localStorage.getItem("settings")) decodeSettings(JSON.parse(localStorage.getItem("settings")));
+        else decodeSettings({ ums_front: 'map', ums_back: 'state', os_front: 'state', os_back: 'capital', ut_front: 'territory', ut_back: 'region', ums: (new Array(193).fill("1")).join(""), os: (new Array(2).fill("1")).join(""), ut: (new Array(5).fill("1")).join("") });
+    }
+
+    const decodeSettings = (s) => {
+        if (s.name) setName(s.name);
+
+        let { ums_front, ums_back, os_front, os_back, ut_front, ut_back, ums, os, ut } = s;
+
+        setSettings({ ums_front, ums_back, os_front, os_back, ut_front, ut_back, ums, os, ut });
+        localStorage.setItem("settings", JSON.stringify({ ums_front, ums_back, os_front, os_back, ut_front, ut_back, ums, os, ut }))
     }
 
     return (
