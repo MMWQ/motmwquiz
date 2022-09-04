@@ -31,8 +31,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
     cursor: pointer;
+    position: relative;
+
+    p {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+    }
 }
 
 .nav {
@@ -50,4 +56,30 @@
             opacity: 1.0;
         }
     }
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        background-color: #8DC2F6;
+        padding: 10px;
+        border-radius: 40px;
+    }
+}
+
+.settings {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.wrapper {
+    background-color: white;
 }
