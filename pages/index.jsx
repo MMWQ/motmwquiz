@@ -43,7 +43,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
     const loadSettings = () => {
         if (session) axios.get("/api/me").then(resp => decodeSettings(resp.data));
         else if (localStorage.getItem("settings")) decodeSettings(JSON.parse(localStorage.getItem("settings")));
-        else decodeSettings({ ums_front: 'map', ums_back: 'state', os_front: 'state', os_back: 'capital', ut_front: 'region', ut_back: 'territory', ums: (new Array(193).fill("1")).join(""), os: (new Array(2).fill("1")).join(""), ut: (new Array(5).fill("1")).join("") });
+        else decodeSettings({ ums_front: 'state', ums_back: 'capital', os_front: 'state', os_back: 'capital', ut_front: 'region', ut_back: 'territory', ums: (new Array(193).fill("1")).join(""), os: (new Array(2).fill("1")).join(""), ut: (new Array(5).fill("1")).join("") });
     }
 
     const decodeSettings = (s) => {
@@ -62,8 +62,8 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
 
     function FC() {
         let k = flashcards[fcIndex].flipped
-            ? settings[flashcards[fcIndex].type + "_front"]
-            : settings[flashcards[fcIndex].type + "_back"];
+            ? settings[flashcards[fcIndex].type + "_back"]
+            : settings[flashcards[fcIndex].type + "_front"];
 
         if (k === "map") return <Image src={flashcards[fcIndex].map} width={400} height={400} />
         else return <h1 style={{ color: flashcards[fcIndex].flipped ? "white" : "black" }}>{flashcards[fcIndex][k]}</h1>
