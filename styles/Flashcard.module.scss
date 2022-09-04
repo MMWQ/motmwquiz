@@ -5,10 +5,34 @@
     background-color: #EDEEEE;
 }
 
+.main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.marg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        opacity: 0.5;
+        transition: 0.2s;
+
+        &:hover {
+            opacity: 1.0;
+        }
+    }
+}
+
 .flashcard {
     background-color: #8DC2F6;
-    margin: 0 25vw;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
 }
 
 .nav {
