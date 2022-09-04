@@ -6,4 +6,6 @@ export default async function handler(req, res) {
     let session = await unstable_getServerSession(req, res, nextAuthOpts);
 
     if (!session) return res.status(401).end();
+
+
 }
