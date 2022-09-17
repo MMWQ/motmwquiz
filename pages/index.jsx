@@ -78,8 +78,13 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
         localStorage.setItem("settings", JSON.stringify(settings));
     }
 
-    function changeToggle(table, index, data) {
-        console.log(data);
+    function changeToggle(table, index) {
+        let tmp = settings[table] + "";
+        tmp = tmp.match(/.{1}/g).map((v, i) => i === index ? v === "0" ? "1" : "0" : v).join("");
+        settings[table] = tmp;
+
+        if (session) axios.post("/api/setting", { table, tmp });
+        localStorage.setItem("settings", JSON.stringify(settings));
     }
 
     return (
@@ -91,7 +96,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
                     <div className={styles.select}>
                         <div className={styles.selectw}>
                             <p>Front:</p>
-                            <Select onChange={(v) => changeFace("ums_front", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ums_front, label: settings.ums_front }) ?? "state"} options={[
+                            <Select onChange={(v) => changeFace("ums_front", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ums_front, label: settings.ums_front }) ?? "map"} options={[
                                 { value: 'state', label: 'state' },
                                 { value: 'capital', label: 'capital' },
                                 { value: 'region', label: 'region' },
@@ -103,7 +108,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
 
                         <div className={styles.selectw}>
                             <p>Back:</p>
-                            <Select onChange={(v) => changeFace("ums_back", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ums_back, label: settings.ums_back }) ?? "state"} options={[
+                            <Select onChange={(v) => changeFace("ums_back", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ums_back, label: settings.ums_back }) ?? "capital"} options={[
                                 { value: 'state', label: 'state' },
                                 { value: 'capital', label: 'capital' },
                                 { value: 'region', label: 'region' },
@@ -118,7 +123,73 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
                         {settings.ums.match(/.{1}/g).map((s, i) => (
                             <div key={i} className={styles.tgb}>
                                 <p title={un_member_state[i].state}>{un_member_state[i].state}</p>
-                                <Toggle onChange={(v) => changeToggle("ums", i, v)} defaultChecked={s === "1"} />
+                                <Toggle onChange={() => changeToggle("ums", i)} defaultChecked={s === "1"} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3 style={{ marginTop: "30px" }}>Observer States</h3>
+
+                    <div className={styles.select}>
+                        <div className={styles.selectw}>
+                            <p>Front:</p>
+                            <Select onChange={(v) => changeFace("os_front", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.os_front, label: settings.os_front }) ?? "state"} options={[
+                                { value: 'state', label: 'state' },
+                                { value: 'capital', label: 'capital' },
+                                { value: 'region', label: 'region' },
+                                { value: 'independence_year', label: 'independence_year' },
+                                { value: 'status', label: 'status' },
+                            ]} />
+                        </div>
+
+                        <div className={styles.selectw}>
+                            <p>Back:</p>
+                            <Select onChange={(v) => changeFace("os_back", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.os_back, label: settings.os_back }) ?? "capital"} options={[
+                                { value: 'state', label: 'state' },
+                                { value: 'capital', label: 'capital' },
+                                { value: 'region', label: 'region' },
+                                { value: 'independence_year', label: 'independence_year' },
+                                { value: 'status', label: 'status' },
+                            ]} />
+                        </div>
+                    </div>
+
+                    <div className={styles.lis}>
+                        {settings.os.match(/.{1}/g).map((s, i) => (
+                            <div key={i} className={styles.tgb}>
+                                <p title={observer_state[i].state}>{observer_state[i].state}</p>
+                                <Toggle onChange={() => changeToggle("os", i)} defaultChecked={s === "1"} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3 style={{ marginTop: "30px" }}>US Territories</h3>
+
+                    <div className={styles.select}>
+                        <div className={styles.selectw}>
+                            <p>Front:</p>
+                            <Select onChange={(v) => changeFace("ut_front", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ut_front, label: settings.ut_front }) ?? "territory"} options={[
+                                { value: 'territory', label: 'territory' },
+                                { value: 'region', label: 'region' },
+                                { value: 'status', label: 'status' },
+                            ]} />
+                        </div>
+
+                        <div className={styles.selectw}>
+                            <p>Back:</p>
+                            <Select onChange={(v) => changeFace("ut_back", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ut_back, label: settings.ut_back }) ?? "region"} options={[
+                                { value: 'territory', label: 'territory' },
+                                { value: 'region', label: 'region' },
+                                { value: 'status', label: 'status' },
+                            ]} />
+                        </div>
+                    </div>
+
+                    <div className={styles.lis}>
+                        {settings.ut.match(/.{1}/g).map((s, i) => (
+                            <div key={i} className={styles.tgb}>
+                                <p title={us_territory[i].territory}>{us_territory[i].territory}</p>
+                                <Toggle onChange={() => changeToggle("ut", i)} defaultChecked={s === "1"} />
                             </div>
                         ))}
                     </div>
