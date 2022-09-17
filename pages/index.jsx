@@ -6,6 +6,7 @@ import axios from "axios";
 import pg from "../lib/db";
 import { useEffect, useState } from "react";
 import Select from 'react-select';
+import Toggle from "react-toggle";
 
 export default function Flashcard({ un_member_state, observer_state, us_territory }) {
     let { data: session } = useSession();
@@ -77,6 +78,10 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
         localStorage.setItem("settings", JSON.stringify(settings));
     }
 
+    function changeToggle(table, index, data) {
+        console.log(data);
+    }
+
     return (
         <>
             <div className={styles.settings} style={{ display: overlay ? "flex" : "none" }} onClick={() => setOverlay(false)}>
@@ -84,27 +89,38 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
                     <h3>UN Member States</h3>
 
                     <div className={styles.select}>
-                        <p>Front:</p>
-                        <Select onChange={(v) => changeFace("ums_front", v)} styles={{ container: (p) => ({ ...p, width: "400px" }) }} defaultValue={({ value: settings?.ums_front, label: settings.ums_front }) ?? "state"} options={[
-                            { value: 'state', label: 'state' },
-                            { value: 'capital', label: 'capital' },
-                            { value: 'region', label: 'region' },
-                            { value: 'independence_year', label: 'independence_year' },
-                            { value: 'independence_from', label: 'independence_from' },
-                            { value: 'map', label: 'map' },
-                        ]} />
+                        <div className={styles.selectw}>
+                            <p>Front:</p>
+                            <Select onChange={(v) => changeFace("ums_front", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ums_front, label: settings.ums_front }) ?? "state"} options={[
+                                { value: 'state', label: 'state' },
+                                { value: 'capital', label: 'capital' },
+                                { value: 'region', label: 'region' },
+                                { value: 'independence_year', label: 'independence_year' },
+                                { value: 'independence_from', label: 'independence_from' },
+                                { value: 'map', label: 'map' },
+                            ]} />
+                        </div>
+
+                        <div className={styles.selectw}>
+                            <p>Back:</p>
+                            <Select onChange={(v) => changeFace("ums_back", v)} styles={{ container: (p) => ({ ...p, width: "150px" }) }} defaultValue={({ value: settings?.ums_back, label: settings.ums_back }) ?? "state"} options={[
+                                { value: 'state', label: 'state' },
+                                { value: 'capital', label: 'capital' },
+                                { value: 'region', label: 'region' },
+                                { value: 'independence_year', label: 'independence_year' },
+                                { value: 'independence_from', label: 'independence_from' },
+                                { value: 'map', label: 'map' },
+                            ]} />
+                        </div>
                     </div>
 
-                    <div className={styles.select}>
-                        <p>Back:</p>
-                        <Select onChange={(v) => changeFace("ums_back", v)} styles={{ container: (p) => ({ ...p, width: "400px" }) }} defaultValue={({ value: settings?.ums_back, label: settings.ums_back }) ?? "state"} options={[
-                            { value: 'state', label: 'state' },
-                            { value: 'capital', label: 'capital' },
-                            { value: 'region', label: 'region' },
-                            { value: 'independence_year', label: 'independence_year' },
-                            { value: 'independence_from', label: 'independence_from' },
-                            { value: 'map', label: 'map' },
-                        ]} />
+                    <div className={styles.lis}>
+                        {settings.ums.match(/.{1}/g).map((s, i) => (
+                            <div key={i} className={styles.tgb}>
+                                <p title={un_member_state[i].state}>{un_member_state[i].state}</p>
+                                <Toggle onChange={(v) => changeToggle("ums", i, v)} defaultChecked={s === "1"} />
+                            </div>
+                        ))}
                     </div>
                 </div> : undefined}
             </div>

@@ -88,12 +88,43 @@
     background-color: white;
     width: 500px;
     height: 60vh;
-    padding: 10px;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    overflow-y: auto;
 }
 
 .select {
     display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.selectw {
+    display: flex;
+    align-items: center;
+
+    p {
+        margin-right: 10px;
+    }
+}
+
+.lis {
+    display: flex;
+    flex-direction: column;
+}
+
+.tgb {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 5px 0;
+    text-align: left;
+
+    p {
+        margin-right: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 }
