@@ -5,6 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import pg from "../lib/db";
 import { useEffect, useState } from "react";
+import Select from 'react-select';
 
 export default function Flashcard({ un_member_state, observer_state, us_territory }) {
     let { data: session } = useSession();
@@ -69,12 +70,43 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
         else return <h1 style={{ color: flashcards[fcIndex].flipped ? "white" : "black" }}>{flashcards[fcIndex][k]}</h1>
     }
 
+    function changeFace(face, { value }) {
+        settings[face] = value;
+
+        if (session) axios.post("/api/setting", { face, value });
+        localStorage.setItem("settings", JSON.stringify(settings));
+    }
+
     return (
         <>
-            <div className={styles.settings} style={{ display: overlay ? "block" : "none" }} onClick={() => setOverlay(false)}>
-                <div className={styles.wrapper}>
+            <div className={styles.settings} style={{ display: overlay ? "flex" : "none" }} onClick={() => setOverlay(false)}>
+                {settings ? <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
+                    <h3>UN Member States</h3>
 
-                </div>
+                    <div className={styles.select}>
+                        <p>Front:</p>
+                        <Select onChange={(v) => changeFace("ums_front", v)} styles={{ container: (p) => ({ ...p, width: "400px" }) }} defaultValue={({ value: settings?.ums_front, label: settings.ums_front }) ?? "state"} options={[
+                            { value: 'state', label: 'state' },
+                            { value: 'capital', label: 'capital' },
+                            { value: 'region', label: 'region' },
+                            { value: 'independence_year', label: 'independence_year' },
+                            { value: 'independence_from', label: 'independence_from' },
+                            { value: 'map', label: 'map' },
+                        ]} />
+                    </div>
+
+                    <div className={styles.select}>
+                        <p>Back:</p>
+                        <Select onChange={(v) => changeFace("ums_back", v)} styles={{ container: (p) => ({ ...p, width: "400px" }) }} defaultValue={({ value: settings?.ums_back, label: settings.ums_back }) ?? "state"} options={[
+                            { value: 'state', label: 'state' },
+                            { value: 'capital', label: 'capital' },
+                            { value: 'region', label: 'region' },
+                            { value: 'independence_year', label: 'independence_year' },
+                            { value: 'independence_from', label: 'independence_from' },
+                            { value: 'map', label: 'map' },
+                        ]} />
+                    </div>
+                </div> : undefined}
             </div>
 
             <div className={styles.page}>
@@ -99,7 +131,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
                             <>
                                 <FC />
 
-                                <p style={{ color: flashcards[fcIndex].flipped ? "white" : "black" }}>{flashcards[fcIndex].flipped ? settings[flashcards[fcIndex].type + "_front"] : settings[flashcards[fcIndex].type + "_back"]} of {flashcards[fcIndex].type === "ums" ? "un member states" : flashcards[fcIndex].type === "os" ? "observer states" : "us territory"}</p>
+                                <p style={{ color: flashcards[fcIndex].flipped ? "white" : "black" }}>{flashcards[fcIndex].flipped ? settings[flashcards[fcIndex].type + "_back"] : settings[flashcards[fcIndex].type + "_front"]} of {flashcards[fcIndex].type === "ums" ? "un member states" : flashcards[fcIndex].type === "os" ? "observer states" : "us territory"}</p>
                             </>
                             : undefined}
                     </div>
