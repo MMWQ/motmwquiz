@@ -76,7 +76,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   button {
     background-color: #acddde;
     padding: 10px;
@@ -93,14 +92,63 @@
 
 .settings {
   position: fixed;
-  background-color: rgb(245, 240, 235);
+  background-color: rgba(0, 0, 0, 0.5);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapper {
-  background-color: rgb(245, 240, 235);
+  background-color: white;
+  width: 500px;
+  height: 60vh;
+  padding: 20px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.select {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.selectw {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-right: 10px;
+  }
+}
+
+.lis {
+  display: flex;
+  flex-direction: column;
+}
+
+.tgb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 0;
+  text-align: left;
+
+  p {
+    margin-right: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.all {
+  text-align: end;
 }
