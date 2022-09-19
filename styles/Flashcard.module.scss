@@ -67,6 +67,11 @@
         background-color: #8DC2F6;
         padding: 10px;
         border-radius: 40px;
+        transition: 0.2s;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 }
 
@@ -80,6 +85,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 100;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -91,7 +97,6 @@
     padding: 20px;
     text-align: center;
     overflow-y: auto;
-
 }
 
 .select {
@@ -127,4 +132,8 @@
         white-space: nowrap;
         overflow: hidden;
     }
+}
+
+.all {
+    text-align: end;
 }
