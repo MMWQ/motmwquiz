@@ -79,6 +79,8 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
 
             <div className={styles.page}>
                 <div className={styles.nav}>
+                <button title="ScoreBoard" onClick={() => setOverlay(true)}><Image src="/scoreboard.svg" width={40} height={40}/></button>
+
                     {session
                         ? <button title="Log Out" onClick={() => signOut()}><Image src="/person-circle.svg" width={40} height={40} /></button>
                         : <button title="Log In" onClick={() => signIn("google")}><Image src="/google.svg" width={40} height={40} /></button>
