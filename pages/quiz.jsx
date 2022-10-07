@@ -7,11 +7,13 @@ import axios from 'axios';
 export default function Quiz() {
     let { data: session } = useSession();
 
-    let [page, setPage] = useState(0);
+    let [page, setPage] = useState(-1);
     let [gameSettings, setGameSettings] = useState({});
     let [scale, setScale] = useState(10);
     let [maxQ, setMaxQ] = useState(0);
     let [qid, setQid] = useState(undefined);
+    let [result, setResult] = useState(undefined);
+    let [progress, setProgress] = useState(0);
 
     useEffect(() => {
         let settings = JSON.parse(localStorage.getItem("settings"));
@@ -20,7 +22,13 @@ export default function Quiz() {
             settings.ut.match(/.{1}/g).reduce((a, b) => a + (b === "1" ? 1 : 0), 0));
 
         let q = localStorage.getItem("qid");
-        setQid(q);
+
+        if (q) {
+            setQid(q);
+            retrieveGame(q);
+            setPage(4);
+        }
+        else setPage(0);
     }, []);
 
     const appendGame = (a) => setGameSettings({ ...gameSettings, ...a });
@@ -54,7 +62,29 @@ export default function Quiz() {
     }
 
     const startGame = async () => {
-        let qid = await axios.post("/api/quiz", gameSettings);
+        let { data: qid } = await axios.post("/api/quiz", gameSettings);
+
+        localStorage.setItem("qid", qid);
+        setQid(qid);
+        retrieveGame(qid);
+    }
+
+    const retrieveGame = async (qid) => {
+        let q = await axios.get("/api/quiz", { qid });
+
+        if (q.data.status) {
+            // on going
+            setGameSettings(q.data.settings);
+            setProgress(q.data?.progress);
+            setPage(4);
+        }
+        else {
+            // game over
+            setQid(undefined);
+            localStorage.removeItem("qid");
+            setResult(q.data.result);
+            setPage(5);
+        }
     }
 
     return (

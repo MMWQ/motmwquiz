@@ -10,6 +10,7 @@ export const nextAuthOpts = {
     ],
     callbacks: {
         async signIn({ profile }) {
+            console.log(profile);
             return profile.email_verified && profile.email.endsWith(process.env.TRUSTED_DOMAIN);
         }
     }
