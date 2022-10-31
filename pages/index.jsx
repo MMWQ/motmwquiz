@@ -168,7 +168,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
 
                         <div className={styles.lis}>
                             {settings.ums.match(/.{1}/g).map((s, i) => (
-                                <div key={i} className={styles.tgb}>
+                                <div className={styles.tgb}>
                                     <p title={un_member_state[i].state}>{un_member_state[i].state}</p>
                                     <Toggle onChange={() => changeToggle("ums", i)} defaultChecked={s === "1"} />
                                 </div>
@@ -207,7 +207,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
 
                         <div className={styles.lis}>
                             {settings.os.match(/.{1}/g).map((s, i) => (
-                                <div key={i} className={styles.tgb}>
+                                <div className={styles.tgb}>
                                     <p title={observer_state[i].state}>{observer_state[i].state}</p>
                                     <Toggle onChange={() => changeToggle("os", i)} defaultChecked={s === "1"} />
                                 </div>
@@ -242,7 +242,7 @@ export default function Flashcard({ un_member_state, observer_state, us_territor
 
                         <div className={styles.lis}>
                             {settings.ut.match(/.{1}/g).map((s, i) => (
-                                <div key={i} className={styles.tgb}>
+                                <div className={styles.tgb}>
                                     <p title={us_territory[i].territory}>{us_territory[i].territory}</p>
                                     <Toggle onChange={() => changeToggle("ut", i)} defaultChecked={s === "1"} />
                                 </div>
